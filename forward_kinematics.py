@@ -2,12 +2,13 @@ import numpy as np
 import pandas
 import math
 import random
+from robot_parameters import Robot_Parameters
 
 #Initialise transformation matrices
 
 class forward_kinematics():
 
-    def __init__(self,theta,d,alpha,a):
+    def __init__(self,theta):
         super.__init__(self)
         self.T1=np.zeros((4,4))
         self.T2=np.zeros((4,4))
@@ -16,11 +17,11 @@ class forward_kinematics():
         self.T5=np.zeros((4,4))
         self.T6=np.zeros((4,4))
         self.theta=theta #all thetas collectively represented as vector
-        self.alpha=alpha #all alphas collectively represented as 
-        self.a=a
-        self.d=d
+        self.alpha=Robot_Parameters.alpha #all alphas collectively represented as 
+        self.a=Robot_Parameters.a
+        self.d=Robot_Parameters.d
         #Input DH parameters (theta1,d,alpha,a) in the same order to avoid mismatch.
-        self.dh=np.array([[self.theta[0],self.d[0],self.alpha[0],self.a[0]],[self.theta[3],self.d[3],self.alpha[3],self.a[1]],[self.theta[2],self.d[2],self.alpha[2],self.a[2]],[self.theta[3],self.d[3],self.alpha[3],self.a[3]],[self.theta[4],self.d[4],self.alpha[4],self.a[4]],[self.theta[5],self.d[5],self.alpha[5],self.a[5]]])
+        self.dh=np.array([[self.theta[0],self.d[0],self.alpha[0],self.a[0]],[self.theta[1],self.d[1],self.alpha[1],self.a[1]],[self.theta[2],self.d[2],self.alpha[2],self.a[2]],[self.theta[3],self.d[3],self.alpha[3],self.a[3]],[self.theta[4],self.d[4],self.alpha[4],self.a[4]],[self.theta[5],self.d[5],self.alpha[5],self.a[5]]])
 
     def get_transformation_matrix(self):
         self.T1=np.array([[math.cos(self.theta[0]),-math.cos(self.alpha[0])*(math.sin(self.theta[0])),math.sin(self.alpha[0])*math.sin(self.theta[0]),self.a[0]*math.cos(self.theta[0])],
