@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="ele_robot_s_1">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="6.2674E-35 0.055992 5.0218E-19"
+        rpy="0 0 0" />
+      <mass
+        value="0.46546" />
+      <inertia
+        ixx="0.00073586"
+        ixy="-5.3584E-36"
+        ixz="7.8206E-37"
+        iyy="0.00034256"
+        iyz="-8.5222E-21"
+        izz="0.00073586" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="J1_s_1">
+    <inertial>
+      <origin
+        xyz="0.018465 0.041056 8.6241E-18"
+        rpy="0 0 0" />
+      <mass
+        value="0.4349" />
+      <inertia
+        ixx="0.00036393"
+        ixy="-9.9694E-05"
+        ixz="-1.2197E-19"
+        iyy="0.00044073"
+        iyz="-5.1858E-20"
+        izz="0.00050697" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/J1_s_1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/J1_s_1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint1_s_1"
+    type="revolute">
+    <origin
+      xyz="0 0 0.148"
+      rpy="1.5708 0 -1.7771" />
+    <parent
+      link="base_link" />
+    <child
+      link="J1_s_1" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-2.36"
+      upper="2.36"
+      effort="3.5"
+      velocity="0.12" />
+  </joint>
+  <link
+    name="J2_s_1">
+    <inertial>
+      <origin
+        xyz="0.048837 4.4409E-16 -0.086786"
+        rpy="0 0 0" />
+      <mass
+        value="1.0762" />
+      <inertia
+        ixx="0.004914"
+        ixy="3.2526E-19"
+        ixz="-0.00021502"
+        iyy="0.0051716"
+        iyz="4.7485E-18"
+        izz="0.00099434" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/J2_s_1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/J2_s_1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint2_s_1"
+    type="revolute">
+    <origin
+      xyz="0.056279 0.052 0"
+      rpy="1.6931 0 0" />
+    <parent
+      link="J1_s_1" />
+    <child
+      link="J2_s_1" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-2.36"
+      upper="2.36"
+      effort="3.5"
+      velocity="0.12" />
+  </joint>
+  <link
+    name="J3_s_1">
+    <inertial>
+      <origin
+        xyz="0.0417889831462106 -6.66133814775094E-16 -0.0638004486132631"
+        rpy="0 0 0" />
+      <mass
+        value="0.882699862234413" />
+      <inertia
+        ixx="0.00259371576654282"
+        ixy="-1.51788304147971E-18"
+        ixz="-0.000147639559498508"
+        iyy="0.00281804201490631"
+        iyz="-2.09149375336032E-17"
+        izz="0.000828534304062944" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/J3_s_1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/J3_s_1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint3_s_1"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.165"
+      rpy="-0.15297 0 -3.1416" />
+    <parent
+      link="J2_s_1" />
+    <child
+      link="J3_s_1" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-2.36"
+      upper="2.36"
+      effort="3.5"
+      velocity="0.12" />
+  </joint>
+  <link
+    name="J4_s_1">
+    <inertial>
+      <origin
+        xyz="0.0184649927504988 0.049777180845152 8.32667268468867E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.43489867060306" />
+      <inertia
+        ixx="0.00036392606673556"
+        ixy="-9.96944913507366E-05"
+        ixz="-1.94817577868489E-19"
+        iyy="0.00044072790719454"
+        iyz="-1.96511643762998E-19"
+        izz="0.000506965833902306" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/J4_s_1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/J4_s_1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint4_s_1"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.12"
+      rpy="3.1416 1.2285 -1.5708" />
+    <parent
+      link="J3_s_1" />
+    <child
+      link="J4_s_1" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-2.36"
+      upper="2.36"
+      effort="35"
+      velocity="0.12" />
+  </joint>
+  <link
+    name="J5_s_1">
+    <inertial>
+      <origin
+        xyz="0.0105332811691815 1.30192763930781E-08 -0.00673097433371628"
+        rpy="0 0 0" />
+      <mass
+        value="0.606013556275632" />
+      <inertia
+        ixx="0.000870525315795126"
+        ixy="6.61276023698689E-11"
+        ixz="2.55735819330205E-05"
+        iyy="0.000960806935429812"
+        iyz="-3.35072228752238E-10"
+        izz="0.000525320634166281" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/J5_s_1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/J5_s_1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Joint5_s_1"
+    type="revolute">
+    <origin
+      xyz="0.10047 0.060721 0"
+      rpy="2.4411 0 0" />
+    <parent
+      link="J4_s_1" />
+    <child
+      link="J5_s_1" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-2.36"
+      upper="2.36"
+      effort="35"
+      velocity="0.12" />
+  </joint>
+  <link
+    name="ee_s_1">
+    <inertial>
+      <origin
+        xyz="0.00536364702848591 -0.00357393546573581 0.0747618945518107"
+        rpy="0 0 0" />
+      <mass
+        value="0.0343431342758072" />
+      <inertia
+        ixx="1.49277503612047E-05"
+        ixy="1.46969209195284E-07"
+        ixz="-1.8204778687697E-09"
+        iyy="1.49277555736489E-05"
+        iyz="-1.82919916922899E-09"
+        izz="2.26736866076301E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/ee_s_1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://ele_robot_s_1/meshes/ee_s_1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="end_effector_s_1"
+    type="continuous">
+    <origin
+      xyz="0.01 0 0"
+      rpy="-3.1416 0 -1.042" />
+    <parent
+      link="J5_s_1" />
+    <child
+      link="ee_s_1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-2.36"
+      upper="2.36"
+      effort="3.5"
+      velocity="0.11" />
+  </joint>
+</robot>
