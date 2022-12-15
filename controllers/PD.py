@@ -24,20 +24,19 @@ class PDControl():
         self.kp,self.kd = self.robot_parameters.get_kpkd()
         self.joint_type='circular'
 
-    def get_cont_joint_ids():
+    def get_cont_joint_ids(self):
         return [0,1,2,3,4,5]
         
     def act(self):
-        q_diff     = self.pos_diff(self.q,self.action,self.joint_type)
-        torque = self.kp * q_diff - self.kd * self.qdot
-        self.torque_control(torque)
+        #q_diff     = self.pos_diff(self.q,self.action,self.joint_type)
+        #torque = self.kp * q_diff - self.kd * self.qdot
+        self.position_control(self.action)
 
     def get_cont_joint_state(self):
         joint_pos = np.zeros(6)
         joint_vel = np.zeros(6)
         for i in range(6):
             joint_pos[i], joint_vel[i], _, _ = pybullet.getJointState(self.robot_id, i)
-            print(joint_pos)
         return joint_pos, joint_vel
     
     def pos_diff(self, pos, des_pos, joint_range_type):
@@ -49,17 +48,36 @@ class PDControl():
                 pos_diff[i] = self.angle_diff(pos[i], des_pos[i])
         return pos_diff
 
-    def torque_control(self, des_torque, no_clipping=False):
-        self.des_torque = des_torque
+    def position_control(self, des_action, no_clipping=False):
+        self.des_action = des_action
         for i in range(6):
             pybullet.setJointMotorControl2(
                 bodyUniqueId=self.robot_id,
                 jointIndex=self.cont_joint_ids[i],
+                controlMode=pybullet.POSITION_CONTROL,
+                targetPosition=self.des_action[i],
+                targetVelocity=0,
+                force=500,
+                positionGain=0.03,
+                velocityGain=1)
+            
+            """pybullet.setJointMotorControl2(
+                bodyUniqueId=self.robot_id,
+                jointIndex=self.cont_joint_ids[i],
                 controlMode=pybullet.TORQUE_CONTROL,
-                force=self.des_torque[i])
+                force=self.des_action[i])
+            """
         pybullet.stepSimulation()
+        
 
-    def angle_diff(pos, des_pos):
+    def evaluate_termination(self):
+        joint_pos,joint_vel=self.get_cont_joint_state()
+        if abs(joint_pos-self.action).all()<=0.00001:
+            return True
+        else:
+            return False
+
+    def angle_diff(self,pos, des_pos):
         if des_pos > pos:
             if des_pos - pos < np.pi:
                 return des_pos - pos
