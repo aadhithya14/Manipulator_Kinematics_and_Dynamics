@@ -41,7 +41,7 @@ if __name__=='__main__':
     joint_angle4_id = pybullet.addUserDebugParameter("JointAngle4",-3.14,3.14,0.1)
     joint_angle5_id = pybullet.addUserDebugParameter("JointAngle5",-3.14,3.14,0.1)
     joint_angle6_id = pybullet.addUserDebugParameter("JointAngle6",-3.14,3.14,0.1)
-    
+    video_id=pybullet.startStateLogging(loggingType=pybullet.STATE_LOGGING_VIDEO_MP4,fileName="inverse.mp4")
     for _ in range(10000):
       pybullet.stepSimulation()
       joint_angle1 = pybullet.readUserDebugParameter(joint_angle1_id)
