@@ -58,7 +58,7 @@ class Inverse_Kinematics():
         # the coordinates of the gripper (end effector) (x, y, z)
         # the rotation of the gripper in gripper frame wrt to the base frame (R0u)
         # the distance between gripper and wrist center dg which is along common z axis
-        # check WRITEUP.pdf for more info
+        # check Report for more info
         xu, yu, zu = gripper_point 
             
         nx, ny, nz = R0g[0, 2], R0g[1, 2], R0g[2, 2]
@@ -74,7 +74,7 @@ class Inverse_Kinematics():
         # (x, y, z) is the wrist center point wrt base frame
         # return the angles q1, q2, q3 for each respective joint
         # given geometry of the kuka kr210
-        # check WRITEUP.pdf for more info
+        # check Report for more info
         x, y, z  = wrist_center
         self.robot_parameters=Robot_Parameters()   
         a = self.robot_parameters.get_a()
@@ -133,7 +133,7 @@ class Inverse_Kinematics():
         gripper_point = x, y, z
 
         ################################################################################
-        # All important symbolic transformations matrices are declared below 
+        # All symbolic transformations matrices are declared below 
         ################################################################################
 
         q1, q2, q3, q4, q5, q6 = symbols('q1:7')

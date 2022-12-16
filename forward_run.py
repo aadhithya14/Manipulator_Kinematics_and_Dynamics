@@ -11,13 +11,12 @@ import pybullet
 import pybullet_data
 
 if __name__=='__main__':
-    #theta = list(map(float,input("\nEnter the joint angles : ").strip().split()))[:6]
-    #forward_kinematics=Forward_Kinematics(theta)
+
     physicsClient = pybullet.connect(pybullet.GUI)
-    done=False
+    #done=False
     #px, py, pz = list(map(float,input("\nEnter px, py, pz : ").strip().split()))[:3]
     #roll, pitch , yaw= list(map(float,input("\nEnter roll, pitch, yaw : ").strip().split()))[:3]
-    inverse_kinematics=Inverse_Kinematics()
+    
     #joint_angles=inverse_kinematics.get_angles(px,py,pz,roll,pitch,yaw)
     #print(joint_angles)
     pybullet.resetDebugVisualizerCamera(2., 180, 0., [0.52, 0.2, np.pi/4.])
@@ -36,24 +35,24 @@ if __name__=='__main__':
     pybullet.setGravity(0., 0., -10.)
 
     maxIters=1000
-    targetPosXId =pybullet.addUserDebugParameter("targetPosX",-50,50,10)
-    targetPosYId = pybullet.addUserDebugParameter("targetPosY",-300,300,10)
-    targetPosZId = pybullet.addUserDebugParameter("targetPosZ",0,320,10)
-    Roll = pybullet.addUserDebugParameter("Roll",-10,10,-0.1)
-    Pitch = pybullet.addUserDebugParameter("Pitch",-10,10,-0.1)
-    Yaw = pybullet.addUserDebugParameter("Yaw",-10,10,-0.1)
-    video_id=pybullet.startStateLogging(loggingType=pybullet.STATE_LOGGING_VIDEO_MP4,fileName="inverse.mp4")
+    joint_angle1_id = pybullet.addUserDebugParameter("JointAngle1",-3.14,3.14,0.1)
+    joint_angle2_id = pybullet.addUserDebugParameter("JointAngle2",-3.14,3.14,0.1)
+    joint_angle3_id = pybullet.addUserDebugParameter("JointAngle3",-3.14,3.14,0.1)
+    joint_angle4_id = pybullet.addUserDebugParameter("JointAngle4",-3.14,3.14,0.1)
+    joint_angle5_id = pybullet.addUserDebugParameter("JointAngle5",-3.14,3.14,0.1)
+    joint_angle6_id = pybullet.addUserDebugParameter("JointAngle6",-3.14,3.14,0.1)
+    
     for _ in range(10000):
       pybullet.stepSimulation()
-      targetPosX = pybullet.readUserDebugParameter(targetPosXId)
-      targetPosY = pybullet.readUserDebugParameter(targetPosYId)
-      targetPosZ = pybullet.readUserDebugParameter(targetPosZId)
-      targetRoll = pybullet.readUserDebugParameter(Roll)
-      targetPitch = pybullet.readUserDebugParameter(Pitch)
-      targetYaw = pybullet.readUserDebugParameter(Yaw)
-      jointPoses =inverse_kinematics.get_angles(targetPosX,targetPosY,targetPosZ,targetRoll,targetPitch,targetYaw)
-      print(jointPoses)
-      env=Env(jointPoses,id)
+      joint_angle1 = pybullet.readUserDebugParameter(joint_angle1_id)
+      joint_angle2 = pybullet.readUserDebugParameter(joint_angle2_id)
+      joint_angle3 = pybullet.readUserDebugParameter(joint_angle3_id)
+      joint_angle4 = pybullet.readUserDebugParameter(joint_angle4_id)
+      joint_angle5 = pybullet.readUserDebugParameter(joint_angle5_id)
+      joint_angle6 = pybullet.readUserDebugParameter(joint_angle6_id)
+      theta= np.array([joint_angle1,joint_angle2,joint_angle3,joint_angle4,joint_angle5,joint_angle6])
+      forward_kinematics=Forward_Kinematics(theta)
+      transformation_matrix =forward_kinematics.get_final_transformation_matrix()
+      print(transformation_matrix)
+      env=Env(theta,id)
       env.step()   
-    
-    

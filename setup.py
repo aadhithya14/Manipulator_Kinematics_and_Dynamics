@@ -11,10 +11,12 @@ setup(name='FOR',
                 if package.startswith('FOR')],
       install_requires=[
           'numpy',
-          'matplotlib'
+          'matplotlib',
+          'sympy',
+          'pybullet'
       ],
-      description="Kinematical and Dynamical Analysis of Plant Machete",
-      author="Aadhithya Iyer and Ajay",
+      description="Kinematical and Dynamical Analysis of Custom Built  Robotic Arm",
+      author="Aadhithya Iyer,  Ajay Jagannathan, Yosef, Sakshi Yadav",
       url='https://github.com/aadhithya14/FOR_project.git',
       author_email="ai2324@nyu.edu",
       version="0.1.4")

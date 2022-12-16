@@ -52,7 +52,7 @@ class PDControl():
         self.des_action = des_action
         for i in range(6):
             pybullet.setJointMotorControl2(
-                bodyUniqueId=self.robot_id,
+                bodyIndex=self.robot_id,
                 jointIndex=self.cont_joint_ids[i],
                 controlMode=pybullet.POSITION_CONTROL,
                 targetPosition=self.des_action[i],
