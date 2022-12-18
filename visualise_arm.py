@@ -3,18 +3,20 @@ import pandas
 import pybullet
 import os
 from forward_kinematics import Forward_Kinematics
-from controllers.PD import PDControl
+from controllers.PD import Control
 import pybullet_data
 import time
 
 class Env():
-    def __init__(self,target_position,id):
+    def __init__(self,target_position,id,target_velocity=np.zeros(6),control_type='torque'):
         self.target_position=target_position   
+        self.target_velocity=target_velocity
         self.id=id
+        self.control_type=control_type
 
     def step(self,maxForce=1000):
         #self.visforward_kinematics=Forward_Kinematics()
-        self.controller=PDControl(self.target_position,self.id)
+        self.controller=Control(self.target_position,self.id,self.target_velocity,self.control_type)
         self.controller.act()
         #time.sleep(10)
         #pybullet.stepSimulation()

@@ -2,8 +2,7 @@ import numpy as np
 from robot_parameters import Robot_Parameters
 from forward_kinematics import Forward_Kinematics
 from sympy import *
-import sympy
-import math
+
 
 
 class Inverse_Kinematics():
@@ -18,7 +17,7 @@ class Inverse_Kinematics():
         #self.forward_transformation=self.forward_kinematics.get_final_transformation_matrix()
         #self.x1,self.x2,self.x3,self.y1,self.y2,self.y3,self.z1, self.z2, self.z3=self.forward_transformation[0][0],self.forward_transformation[0][1],self.forward_transformation[0][2],self.forward_transformation[1][0],self.forward_transformation[1][1], self.forward_transformation[1][2], self.forward_transformation[2][0], self.forward_transformation[2][1], self.forward_transformation[2][2]
         
-
+    #Analytical method , did not work well as the code compiling was too slow.
     def solve_joint_angles(self):
         eq1=self.x-self.x_inverse
         eq2=self.y-self.y_inverse
@@ -36,6 +35,7 @@ class Inverse_Kinematics():
         
         return result
 
+    #Geometric method
     def get_hypotenuse(self,a, b):
   # calculate the longest side given the two shorter sides 
   # of a right triangle using pythagorean theorem
@@ -178,7 +178,7 @@ class Inverse_Kinematics():
             [                                                                -(sin(q5)*sin(q2 + q3) - cos(q4)*cos(q5)*cos(q2 + q3))*cos(q6) - sin(q4)*sin(q6)*cos(q2 + q3),                                                                  (sin(q5)*sin(q2 + q3) - cos(q4)*cos(q5)*cos(q2 + q3))*sin(q6) - sin(q4)*cos(q6)*cos(q2 + q3),                                     -sin(q5)*cos(q4)*cos(q2 + q3) - sin(q2 + q3)*cos(q5),                                                                                 -0.303*sin(q5)*cos(q4)*cos(q2 + q3) - 0.303*sin(q2 + q3)*cos(q5) - 1.5*sin(q2 + q3) + 1.25*cos(q2) - 0.054*cos(q2 + q3) + 0.75],
             [                                                                                                                                                            0,                                                                                                                                                             0,                                                                                        0,                                                                                                                                                                                                              1]])
 
-        # Rotation of urdf_gripper wrt (DH) gripper frame from rotz(pi) * roty(-pi/2) and it's transpose
+        # Rotation of urdf_gripper wrt (DH) gripper frame from rotz(pi/2) * roty(-pi/2) and it's transpose
         Rgu_eval = Matrix([[0, -1, 0], [0, 0, 1], [-1, 0, 0]])
         RguT_eval = Matrix([[0, 0, -1], [ -1, 0, 0], [0, 1, 0]])
 

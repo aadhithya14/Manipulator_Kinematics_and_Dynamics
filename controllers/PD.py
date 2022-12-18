@@ -2,8 +2,9 @@ import numpy as np
 from robot_parameters import Robot_Parameters
 import pybullet
 
-class PDControl():
-    def __init__(self,action,robot_id,control_type='PD'):
+class Control():
+    def __init__(self,action,robot_id,des_velocity=np.zeros(6),control_type='PD'):
+        self.des_velocity=des_velocity
         self.control_type=control_type
         self.robot_id=robot_id
         self.ndof=6
@@ -30,7 +31,10 @@ class PDControl():
     def act(self):
         #q_diff     = self.pos_diff(self.q,self.action,self.joint_type)
         #torque = self.kp * q_diff - self.kd * self.qdot
-        self.position_control(self.action)
+        if self.control_type=='PD':
+            self.position_control(self.action,self.des_velocity)
+        else:
+            self.torque_control(self.action)
 
     def get_cont_joint_state(self):
         joint_pos = np.zeros(6)
@@ -39,24 +43,17 @@ class PDControl():
             joint_pos[i], joint_vel[i], _, _ = pybullet.getJointState(self.robot_id, i)
         return joint_pos, joint_vel
     
-    def pos_diff(self, pos, des_pos, joint_range_type):
-        pos_diff = np.zeros(pos.shape)
-        for i in range(pos.shape[0]):
-            if joint_range_type[i] == 'limited':
-                pos_diff[i] = des_pos[i] - pos[i]
-            else:
-                pos_diff[i] = self.angle_diff(pos[i], des_pos[i])
-        return pos_diff
 
-    def position_control(self, des_action, no_clipping=False):
+    def position_control(self, des_action, des_vel=np.zeros(6), no_clipping=False):
         self.des_action = des_action
+        self.des_vel= des_vel
         for i in range(6):
             pybullet.setJointMotorControl2(
                 bodyIndex=self.robot_id,
                 jointIndex=self.cont_joint_ids[i],
                 controlMode=pybullet.POSITION_CONTROL,
                 targetPosition=self.des_action[i],
-                targetVelocity=0,
+                targetVelocity=self.des_vel[i],
                 force=500,
                 positionGain=0.03,
                 velocityGain=1)
@@ -69,22 +66,12 @@ class PDControl():
             """
         pybullet.stepSimulation()
         
-
-    def evaluate_termination(self):
-        joint_pos,joint_vel=self.get_cont_joint_state()
-        if abs(joint_pos-self.action).all()<=0.00001:
-            return True
-        else:
-            return False
-
-    def angle_diff(self,pos, des_pos):
-        if des_pos > pos:
-            if des_pos - pos < np.pi:
-                return des_pos - pos
-            else:
-                return des_pos - 2 * np.pi - pos
-        else:
-            if pos - des_pos < np.pi:
-                return des_pos - pos
-            else:
-                return des_pos + 2 * np.pi - pos
+    def torque_control(self,des_torque):
+        self.des_torque=des_torque
+        for i in range(6):
+            pybullet.setJointMotorControl2(
+                bodyIndex=self.robot_id,
+                jointIndex=self.cont_joint_ids[i],
+                controlMode=pybullet.TORQUE_CONTROL,
+                force=self.des_torque[i])
+        pybullet.stepSimulation()
