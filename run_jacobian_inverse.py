@@ -1,4 +1,4 @@
-from controllers.PD import PDControl
+from controllers.PD import Control
 from inverse_kinematics import Inverse_Kinematics
 from turtle import forward
 import numpy as np
