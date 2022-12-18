@@ -31,10 +31,7 @@ class Control():
     def act(self):
         #q_diff     = self.pos_diff(self.q,self.action,self.joint_type)
         #torque = self.kp * q_diff - self.kd * self.qdot
-        if self.control_type=='PD':
-            self.position_control(self.action,self.des_velocity)
-        else:
-            self.torque_control(self.action)
+        self.position_control(self.action,self.des_velocity)
 
     def get_cont_joint_state(self):
         joint_pos = np.zeros(6)
