@@ -73,6 +73,6 @@ if __name__=='__main__':
       print("The Jacobian Matrix is",jacobian_matrix)   
       endeff_velocities=jacobian_matrix*Matrix([joint_vel1,joint_vel2,joint_vel3,joint_vel4,joint_vel5,joint_vel6])
       print("The endeffector velocities are",endeff_velocities)
-      env=Env(theta,id,joint_velocity)
+      env=Env(theta,id,target_velocity=joint_velocity)
       env.step()
      

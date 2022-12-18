@@ -1,4 +1,4 @@
-from controllers.PD import PDControl
+from controllers.PD import Control
 from inverse_kinematics import Inverse_Kinematics
 from turtle import forward
 import numpy as np
@@ -37,18 +37,18 @@ if __name__=='__main__':
     pybullet.setGravity(0., 0., -10.)
 
     maxIters=1000
-    targetPosXId =pybullet.addUserDebugParameter("targetPosX",-50,50,10)
-    targetPosYId = pybullet.addUserDebugParameter("targetPosY",-300,300,10)
-    targetPosZId = pybullet.addUserDebugParameter("targetPosZ",0,180,10)
-    Roll = pybullet.addUserDebugParameter("Roll",-10,10,-0.1)
-    Pitch = pybullet.addUserDebugParameter("Pitch",-10,10,-0.1)
-    Yaw = pybullet.addUserDebugParameter("Yaw",-10,10,-0.1)
-    targetForceX = pybullet.addUserDebugParameter("targetForceX",-5,5,1)
-    targetForceY = pybullet.addUserDebugParameter("targetForceY",-5,5,1)
-    targetForceZ = pybullet.addUserDebugParameter("targetForceZ",0,10,2)
-    targetMomentx = pybullet.addUserDebugParameter("targetMomentx",-5,5,1)
-    targetMomenty = pybullet.addUserDebugParameter("targetMomenty",-5,5,1)
-    targetMomentz = pybullet.addUserDebugParameter("targetMomentz",-5,5,1)
+    targetPosXId =pybullet.addUserDebugParameter("targetPosX",-0.20,0.20,0.05)
+    targetPosYId = pybullet.addUserDebugParameter("targetPosY",-0.5,0.5,0.05)
+    targetPosZId = pybullet.addUserDebugParameter("targetPosZ",0,0.6,0.1)
+    Roll = pybullet.addUserDebugParameter("Roll",-3.14,3.14,0.1)
+    Pitch = pybullet.addUserDebugParameter("Pitch",-3.14,3.14,0.1)
+    Yaw = pybullet.addUserDebugParameter("Yaw",-3.14,3.14,0.1)
+    targetForceX = pybullet.addUserDebugParameter("targetForceX",-200,200,10)
+    targetForceY = pybullet.addUserDebugParameter("targetForceY",-200,200,10)
+    targetForceZ = pybullet.addUserDebugParameter("targetForceZ",-200,200,10)
+    targetMomentx = pybullet.addUserDebugParameter("targetMomentx",-200,200,10)
+    targetMomenty = pybullet.addUserDebugParameter("targetMomenty",-200,200,10)
+    targetMomentz = pybullet.addUserDebugParameter("targetMomentz",-200,200,10)
     #video_id=pybullet.startStateLogging(loggingType=pybullet.STATE_LOGGING_VIDEO_MP4,fileName="forward.mp4")
     
     #print("***")
@@ -71,9 +71,10 @@ if __name__=='__main__':
       theta =inverse_kinematics.get_angles(targetPosX,targetPosY,targetPosZ,targetRoll,targetPitch,targetYaw)
       jacobian=Geometric_Jacobian(theta)
       jacobian_matrix=jacobian.get_jacobian()
-      
       transpose_jacobian=jacobian_matrix.transpose()
       Torques=transpose_jacobian*Matrix([targetForceX,targetForceY,targetForceZ,targetMoment_X,targetMoment_Y,targetMoment_Z])
+      print("****")
+      print(Torques)
 
-      env=Env(Torques,id,control_type='torque')
+      env=Env(theta,id,target_torque=Torques,control_type='torque')
       env.step()

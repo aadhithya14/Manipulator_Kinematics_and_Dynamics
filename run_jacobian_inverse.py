@@ -50,7 +50,7 @@ if __name__=='__main__':
     Angular_vel_y = pybullet.addUserDebugParameter("targetAngularvely",-3.14,3.14,0.1)
     Angular_vel_z = pybullet.addUserDebugParameter("targetAngularvelz",-3.14,3.14,0.1)
     #video_id=pybullet.startStateLogging(loggingType=pybullet.STATE_LOGGING_VIDEO_MP4,fileName="forward.mp4")
-    
+    video_id=pybullet.startStateLogging(loggingType=pybullet.STATE_LOGGING_VIDEO_MP4,fileName="jacobian_inverse_1.mp4")
     #print("***")
     for _ in range(10000):
       pybullet.stepSimulation()
@@ -68,6 +68,7 @@ if __name__=='__main__':
       targetAngular_y = pybullet.readUserDebugParameter(Angular_vel_y)
       targetAngular_z = pybullet.readUserDebugParameter(Angular_vel_z)
       #theta= np.array([joint_angle1,joint_angle2,joint_angle3,joint_angle4,joint_angle5,joint_angle6])
+
       theta =inverse_kinematics.get_angles(targetPosX,targetPosY,targetPosZ,targetRoll,targetPitch,targetYaw)
       jacobian=Geometric_Jacobian(theta)
       jacobian_matrix=jacobian.get_jacobian()
@@ -75,5 +76,5 @@ if __name__=='__main__':
       inverse_jacobian=jacobian_matrix.inv(method="LU") #Jacobian Inverse calculated
       joint_velocities=inverse_jacobian*Matrix([targetVelX,targetVelY,targetVelZ,targetAngular_x,targetAngular_y,targetAngular_z]) #Joint velocities calculated from cartesian velocities.
 
-      env=Env(theta,id,joint_velocities)
+      env=Env(theta,id,target_velocity=joint_velocities)
       env.step()

@@ -3,8 +3,9 @@ from robot_parameters import Robot_Parameters
 import pybullet
 
 class Control():
-    def __init__(self,action,robot_id,des_velocity=np.zeros(6),control_type='PD'):
+    def __init__(self,action,robot_id,des_torque=np.zeros(6),des_velocity=np.zeros(6),control_type='PD'):
         self.des_velocity=des_velocity
+        self.des_torque=des_torque
         self.control_type=control_type
         self.robot_id=robot_id
         self.ndof=6
@@ -31,7 +32,13 @@ class Control():
     def act(self):
         #q_diff     = self.pos_diff(self.q,self.action,self.joint_type)
         #torque = self.kp * q_diff - self.kd * self.qdot
-        self.position_control(self.action,self.des_velocity)
+        if self.control_type=='PD':
+            self.position_control(self.action,self.des_velocity)
+        else:
+            #self.action=np.zeros(6)
+            #self.position_control(self.action,self.des_velocity)
+            #print(self.des_torque)
+            self.torque_control(self.des_torque)
 
     def get_cont_joint_state(self):
         joint_pos = np.zeros(6)
@@ -65,6 +72,8 @@ class Control():
         
     def torque_control(self,des_torque):
         self.des_torque=des_torque
+        print("###")
+        print(self.des_torque[0])
         for i in range(6):
             pybullet.setJointMotorControl2(
                 bodyIndex=self.robot_id,
