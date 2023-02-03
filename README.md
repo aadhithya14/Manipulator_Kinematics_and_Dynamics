@@ -1,4 +1,4 @@
-# FOR_project
+# Manipulator Kinematics and Dynamics
 
 This projects involves designing of a 6DOF mannipulator from scratch using the off the shelf 3D printed parts and solving the kinematics and dynamics of the manipulator and simulating in PyBullet.
 
